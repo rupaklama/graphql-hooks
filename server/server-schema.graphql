@@ -1,0 +1,32 @@
+# .graphql extension makes it clear that it contains graphQL code
+
+# Type Query is to READ DATA without modifying 
+# NOTE - All Queries must return result/response object 
+# right side of the ':' is the response object
+type Query {
+  # all our Query Types
+  
+  # an array where each item data type is a CUSTOM type 'Job'
+  # array of Job Objects from below
+  jobs: [Job]
+}
+
+# SCHEMA TYPES - data types
+type Job {
+  # graphQL provides a built in type 'ID' which is similar to STRING - sent as a string in json
+  # '!' - required, never be NULL
+  id: ID!
+  title: String
+  description: String
+
+  # NOTE - To access data from Job to Company
+  # Note - setting up Nested Queries with field - 'company'
+  # Linking another data table, similar to foreign key in relational database
+  company: Company
+}
+
+type Company {
+  id: ID!
+  name: String
+  description: String
+}
