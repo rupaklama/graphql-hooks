@@ -15,6 +15,7 @@ export class JobBoard extends Component {
 
   render() {
     const { jobs } = this.state;
+    // console.log(jobs);
 
     return (
       <div>

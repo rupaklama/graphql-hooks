@@ -46,7 +46,7 @@ const apolloServer = new ApolloServer({
   resolvers,
 });
 
-// applyMiddleware func - to connect Apollo server into our existing existing Express app
+// applyMiddleware func - to connect Apollo server into our existing Express app
 // Passing instance of express app from above - const app = express() &
 // optionally we can also set a path that is where we want to expose graphQL endpoint on our server
 apolloServer.applyMiddleware({ app, path: '/graphql' });

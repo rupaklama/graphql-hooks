@@ -7,8 +7,16 @@ type Query {
   # all our Query Types
   
   # an array where each item data type is a CUSTOM type 'Job'
-  # array of Job Objects from below
+  # AN array of Job Objects 
   jobs: [Job]
+
+  # Query with Arguments which takes Query Variables
+  # To return a Single Job Object with specific ID
+  # In graphQL, we can pass args to query variables using this syntax & the return type is Job object
+  job(id: ID!): Job
+
+  # To return a Single Company Object with Query Variable
+  company(id: ID!): Company
 }
 
 # SCHEMA TYPES - data types
@@ -21,7 +29,7 @@ type Job {
 
   # NOTE - To access data from Job to Company
   # Note - setting up Nested Queries with field - 'company'
-  # Linking another data table, similar to foreign key in relational database
+  # Linking another data table, similar to foreign key in 'relational' database
   company: Company
 }
 
@@ -29,4 +37,7 @@ type Company {
   id: ID!
   name: String
   description: String
+
+  # this field will return array of 'Job' objects
+  jobs: [Job]
 }
