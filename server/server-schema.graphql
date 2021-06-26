@@ -6,7 +6,7 @@
 type Query {
   # all our Query Types
   
-  # an array where each item data type is a CUSTOM type 'Job'
+  # an array where each item data type is a CUSTOM type 'Job' Schema
   # AN array of Job Objects 
   jobs: [Job]
 
@@ -40,4 +40,38 @@ type Company {
 
   # this field will return array of 'Job' objects
   jobs: [Job]
+}
+
+# MUTATION TYPES - Mutation is to change data directly.
+type Mutation {
+  # id is assigned by the Server, we don't want to pass it from Client
+  # NOTE - All mutation must return result/response object just like with Query types
+
+  # createJob(title: String, description: String, companyId: ID) : ID
+  # This got Re-factor down below
+  # createJob(title: String, description: String, companyId: ID): Job
+
+  # note instead of returning ': ID', we want to return 'Job' object for Client Side 
+  # to display New Job Data including all its fields - better choice 
+  # By doing this, we can query any Child Schema Child Schema & its FIELDS related to 'Job' object 
+  # with SINGLE QUERY instead of TWO - BEST PRACTICE FOR MUTATION
+
+  # Instead of passing three arguments or more, we can pass a 'Single Argument' 
+  # that contains all the fields for the Job Object to be created. As arguments, we can only use 'Input Types' 
+  # createJob(title: String, description: String, companyId: ID) : Job
+  createJob(input: CreateJobInput) : Job
+  # note instead of returning ': ID', we want to return 'Job' object for Client Side to display Job Data 
+  # 'Input Types' as args from below
+}
+
+# NOTE - Things like accepting 'Single Input Argument' for each Mutation are some of the 'Best Practices'
+# Input Types are Argument Types to pass into Mutation to avoid passing lots of arguments 
+# This will make it lot easier on Client Side to call our APIs
+# It's common to name Input Type by adding 'input' at the end  
+input CreateJobInput {
+  # createJob(title: String, description: String, companyId: ID): Job
+  # Arguments are pass down as Fields here
+  title: String
+  description: String
+  # companyId: ID - set up this field from the 'context' in resolver object - resolver.js
 }

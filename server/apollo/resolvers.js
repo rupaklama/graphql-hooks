@@ -27,8 +27,8 @@ const Query = {
   company: (root, { id }) => db.companies.get(id),
 };
 
-// THIS IS TO REFLECT THE STRUCTURE OF OUR SCHEMA TYPES
-// BY DEFINING NEW RESOLVER OBJECT TYPES
+// THIS IS TO REFLECT THE STRUCTURE OF OUR SCHEMA TYPES BY DEFINING NEW RESOLVER OBJECT TYPES
+// since we have a NESTED FIELDS, MUTATIONS & SUBSCRIPTIONS
 
 // NOTE - whenever there's a Job Object where request is a 'company' field,
 // this function will be invoked
@@ -38,7 +38,7 @@ const Query = {
 // similar to foreign key in relational database
 
 // The resolver must reflect Schema so we need to declare 'New Resolver Object'
-// for the Job type since it has a nested query filed(foreign key) to another object - company
+// for the 'Job' type since it has a nested query filed(foreign key) to another object - company
 const Job = {
   // resolver function receives some args - resolve(parentValue, args)
   // 'parentValue' is the Parent Data table - 'Job' Object
@@ -58,5 +58,44 @@ const Company = {
   jobs: company => db.jobs.list().filter(job => job.companyId === company.id),
 };
 
+// we also need to match the MUTATION Structure Schema also
+// Mutation is a function that returns the value
+const Mutation = {
+  // root is the parent object - parentValue, args we defined in Mutation Schema to change data
+
+  // NOTE - CHECK IF USER IS AUTHENTICATED BEFORE POSTING A JOB
+  // WE DO THIS WITH THIRD PARAM PASSED TO RESOLVED FUNC - CONTEXT
+  // With 'Context' we can access things that are not part of GraphQL itself but are provided by our Application.
+
+  // createJob: (root, { title, description, companyId }) => {
+  // Passing INPUT TYPES which contains all the args above
+  createJob: (root, { input }, context) => {
+    // note - context can contain whatever we want &
+    // it's up to us to put something into the context in first place
+    // Note - We pass 'context' property into an instance of Apollo Server in server.js as 'initial setup'
+    // console.log('context:', context);
+
+    // this will skip rest of the code here
+    // return null;
+
+    // user not authenticated
+    if (!context.user) {
+      // NOTE - throwing an error will cause GraphQL server to return Error Response Object
+      throw new Error('Unauthorized');
+    }
+
+    // using 'create' method which takes an Object fields to create a NEW Object
+    // & returns 'String' that will be the ID of NEWLY CREATED OBJECT
+    // const id = db.jobs.create({ title, description, companyId });
+    const id = db.jobs.create({ ...input, companyId: context.user.companyId });
+    // setting 'companyId field' from context so that we can use it in JobForm component
+
+    // here returning 'Job' object to display data in the Client
+    return db.jobs.get(id);
+    // by doing this, we can also query any Child Schema & its FIELDS related to 'Job' object
+    // with SINGLE QUERY instead of TWO - BEST PRACTICE FOR MUTATION
+  },
+};
+
 // This RESOLVERS Object will be pass down into Apollo server instance in server.js
-module.exports = { Query, Job, Company };
+module.exports = { Query, Job, Company, Mutation };

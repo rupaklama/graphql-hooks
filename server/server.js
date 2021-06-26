@@ -44,6 +44,21 @@ const resolvers = require('./apollo/resolvers');
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  // setting up Authentication with 'context'
+  context: ({ req }) => ({
+    // here we can extract any information we want from the HTTP Request &
+    // make it available in the 'context' to be visible in the Resolver
+    // Context contains property - { method: 'POST' }
+    // method: req.method, - we get access to Http method like POST or accessing 'user' data in the request body
+    // 'user undefined' - not authenticated, user is only defined if we send valid access token - jwt
+
+    // NOTE - if user is not logged in frontend, the request will not include access token
+    // In this case, req.user will be undefined - not authenticated
+    // We want to check first if req.user is defined - authenticated, in this case get 'user' from db
+    user: req.user && db.users.get(req.user.sub), // passing id as arg
+    // 'sub' meaning 'user id' in context object, name alias by graphQL
+    // Above will return all 'user' data from db
+  }),
 });
 
 // applyMiddleware func - to connect Apollo server into our existing Express app
