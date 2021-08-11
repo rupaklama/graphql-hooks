@@ -10,7 +10,7 @@ const db = require('../db');
 // parentValue - don't get used very often
 // args - This is an Object which gets call whatever arguments are passed into the original query
 
-// Query Resolvers
+// Query Resolvers - A resolver is a function that generates a response object
 // This is to resolve all the 'type Query' in our Schema file
 const Query = {
   // Resolvers are Functions to resolve Query Types by fetching data from our db
