@@ -19,7 +19,7 @@ type Query {
   company(id: ID!): Company
 }
 
-# SCHEMA TYPES - data types
+# SCHEMA TYPES - data types also known as Output Types
 type Job {
   # graphQL provides a built in type 'ID' which is similar to STRING - sent as a string in json
   # '!' - required, never be NULL
