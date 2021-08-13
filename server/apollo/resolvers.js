@@ -91,7 +91,8 @@ const Mutation = {
     const id = db.jobs.create({ ...input, companyId: context.user.companyId });
     // setting 'companyId field' from context so that we can use it in JobForm component
 
-    // here returning 'Job' object to display data in the Client
+    // here returning 'Job' object to display data in the Client after creating right away
+    // that we don't have to make another query to display Job data
     return db.jobs.get(id);
     // by doing this, we can also query any Child Schema & its FIELDS related to 'Job' object
     // with SINGLE QUERY instead of TWO - BEST PRACTICE FOR MUTATION
