@@ -1,6 +1,6 @@
 # .graphql extension makes it clear that it contains graphQL code
 
-# Type Query is to READ DATA without modifying 
+# Type Query is to READ/REQUEST DATA without modifying 
 # NOTE - All Queries must return result/response object 
 # right side of the ':' is the response object
 type Query {
