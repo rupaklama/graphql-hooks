@@ -184,6 +184,7 @@ export async function loadCompany(id) {
 //       `,
 
 //       // adding another property named 'variables' to pass query variables
+//       // NOTE - This will be send in a JSON request
 //       variables: { id },
 //     }),
 //   });
