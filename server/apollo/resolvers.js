@@ -87,6 +87,7 @@ const Mutation = {
     // using 'create' method which takes an Object fields to create a NEW Object
     // & returns 'String' that will be the ID of NEWLY CREATED OBJECT
     // const id = db.jobs.create({ title, description, companyId });
+    // const id = db.jobs.create(input);
     const id = db.jobs.create({ ...input, companyId: context.user.companyId });
     // setting 'companyId field' from context so that we can use it in JobForm component
 
