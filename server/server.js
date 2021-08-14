@@ -44,6 +44,7 @@ const resolvers = require('./apollo/resolvers');
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  // adding 'context' object to access request/response objects of our application
   // setting up Authentication with 'context'
   context: ({ req }) => ({
     // here we can extract any information we want from the HTTP Request &
