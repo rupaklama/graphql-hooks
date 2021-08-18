@@ -119,6 +119,7 @@ export async function loadJobs() {
   // basically a graphQL Response Object, extracting 'data' property which has a Response Object
   const { data } = await client.query({ query: query, fetchPolicy: 'no-cache' });
   // NOTE - BY DEFAULT, Apollo client applies Caching 'cache-first' which might causes unexpected results
+  // 'cache-first' will first try to get data from the cache, if no cache data then it will call the server
   // To override, we can use 'fetchPolicy' prop with provided values that we can choose from
   // 'no-cache' - no caching, data will be always fetch from the server
 
