@@ -73,8 +73,7 @@ export async function createJob(input) {
       // we want to update the cache with data returned by mutation but we want that cached
       // data to be used whenever we make query to load the same data - job
       cache.writeQuery({
-        // query that generated the result to be cached
-        query: jobQuery,
+        query: jobQuery, // query that generated the result to be cached - jobQuery
         variables: { id: data.job.id },
         data: data,
       });
