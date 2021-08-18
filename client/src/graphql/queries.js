@@ -49,7 +49,9 @@ export async function createJob(input) {
 
     // adding another property named 'variables' to pass query variables
     variables: { input },
-
+    
+    
+    // NOTE - WE NEED TO CACHE OUR MUTATION SINCE APOLLO CLIENT ONLY CACHES QUERY ONLY
     // 'update' prop gives us full control over the cache
     // 'update' is the function that will be called after the mutation has been executed
     // It receives TWO PARAMS
